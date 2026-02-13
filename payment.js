@@ -14,7 +14,7 @@ async function initiatePhonePePayment(totalAmount) {
           client_version: 1,
           grant_type: "client_credentials",
           client_id: "M23SDLRCTHQGZ_2512071520",
-          client_secret: "YOUR_SECRET_HERE",
+          client_secret: "NDQwOTQ4MWQtYjFhNS00ZDU4LThhOGMtMDZmYjY0N2YyOGFi",
         }),
       }
     );
