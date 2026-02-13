@@ -923,22 +923,21 @@ header {
                 Place Order
             </button>
                 <script>
-                      document
-                        .getElementById("placeOrderBtn")
-                        .addEventListener("click", function () {
-                    
-                          // ✅ Get total amount from cart UI
-                          totalAmount = document.getElementById("cartTotal").innerText;
-                    
-                          // Convert string → number
-                          totalAmount = parseFloat(totalAmount);
-                    
-                          console.log("Place Order Clicked!");
-                          console.log("Total Amount:", totalAmount);
-                    
-                          // ✅ Call PhonePe Payment Function (from payment.js)
-                          initiatePhonePePayment(totalAmount);
-                        });
+                  document.getElementById("placeOrderBtn").addEventListener("click", function () {
+                
+                    // ✅ Use cartTotal variable directly
+                    console.log("Place Order Clicked!");
+                    console.log("Cart Total:", cartTotal);
+                
+                    if (cartTotal <= 0) {
+                      alert("Cart is empty! Please add items first.");
+                      return;
+                    }
+                
+                    // ✅ Start PhonePe Payment
+                    initiatePhonePePayment(cartTotal);
+                
+                  });
                 </script>
             </div>
         </div>
