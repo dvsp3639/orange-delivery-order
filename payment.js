@@ -56,9 +56,24 @@ async function initiatePhonePePayment(totalAmount) {
 
     // STEP 3: Redirect User
     if (paymentData.redirectUrl) {
-      window.location.href = paymentData.redirectUrl;
-    } else {
-      alert("Payment initiation failed!");
+    
+      console.log("Opening PhonePe PayPage in IFRAME...");
+    
+      window.PhonePeCheckout.transact({
+        tokenUrl: paymentData.redirectUrl,
+        type: "IFRAME",
+    
+        callback: function (result) {
+          console.log("Payment Finished:", result);
+    
+          if (result.status === "SUCCESS") {
+            alert("Payment Successful 🎉");
+          } else {
+            alert("Payment Failed or Cancelled ❌");
+          }
+        }
+      });
+    
     }
 
   } catch (error) {
