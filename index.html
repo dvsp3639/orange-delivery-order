@@ -922,6 +922,24 @@ header {
             <button class="place-order-btn" id="placeOrderBtn">
                 Place Order
             </button>
+                <script>
+                      document
+                        .getElementById("placeOrderBtn")
+                        .addEventListener("click", function () {
+                    
+                          // ✅ Get total amount from cart UI
+                          let totalAmount = document.getElementById("totalAmount").innerText;
+                    
+                          // Convert string → number
+                          totalAmount = parseFloat(totalAmount);
+                    
+                          console.log("Place Order Clicked!");
+                          console.log("Total Amount:", totalAmount);
+                    
+                          // ✅ Call PhonePe Payment Function (from payment.js)
+                          initiatePhonePePayment(totalAmount);
+                        });
+                </script>
             </div>
         </div>
     </div>
