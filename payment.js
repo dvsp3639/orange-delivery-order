@@ -44,7 +44,7 @@ async function initiatePhonePePayment(totalAmount) {
             message: "Orange Delivery Payment",
 
             merchantUrls: {
-              redirectUrl: "https://yourdomain.com/success.html",
+              redirectUrl: "https://order.orange-foods,info",
             },
           },
         }),
