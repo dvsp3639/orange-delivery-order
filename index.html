@@ -925,18 +925,30 @@ header {
                 <script>
                   document.getElementById("placeOrderBtn").addEventListener("click", function () {
                 
-                    // ✅ Use cartTotal variable directly
                     console.log("Place Order Clicked!");
-                    console.log("Cart Total:", cartTotal);
                 
-                    if (cartTotal <= 0) {
-                      alert("Cart is empty! Please add items first.");
+                    // ✅ Get text from cartTotal div
+                    let cartText = document.getElementById("cartTotal").innerText;
+                
+                    console.log("Cart Text:", cartText);
+                
+                    // Example cartText = "Total: ₹ 290.00"
+                
+                    // ✅ Remove everything except numbers
+                    let totalAmount = cartText.replace("Total: ₹", "").trim();
+                
+                    // Convert to number
+                    totalAmount = parseFloat(totalAmount);
+                
+                    console.log("Final Total Amount:", totalAmount);
+                
+                    if (isNaN(totalAmount) || totalAmount <= 0) {
+                      alert("Cart total invalid. Please add items.");
                       return;
                     }
                 
-                    // ✅ Start PhonePe Payment
-                    initiatePhonePePayment(cartTotal);
-                
+                    // ✅ Start payment
+                    initiatePhonePePayment(totalAmount);
                   });
                 </script>
             </div>
