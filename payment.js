@@ -66,7 +66,11 @@ async function initiatePhonePePayment(totalAmount) {
         callback: function (result) {
           console.log("Payment Finished:", result);
     
-          if (result.status === "SUCCESS") {
+          if (
+            response.status === "CONCLUDED" ||
+            response.status === "COMPLETED" ||
+            response.status === "SUCCESS"
+          ){
             alert("Payment Successful 🎉");
           } else {
             alert("Payment Failed or Cancelled ❌");
