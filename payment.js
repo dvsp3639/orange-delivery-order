@@ -1,5 +1,8 @@
 async function initiatePhonePePayment(totalAmount) {
   try {
+    console.log("Payment Started...");
+
+    // STEP 1: Generate Access Token
     const tokenResponse = await fetch(
       "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token",
       {
@@ -17,8 +20,11 @@ async function initiatePhonePePayment(totalAmount) {
     );
 
     const tokenData = await tokenResponse.json();
+    console.log("Token Data:", tokenData);
+
     const accessToken = tokenData.access_token;
 
+    // STEP 2: Create Payment Request
     const paymentResponse = await fetch(
       "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay",
       {
@@ -28,14 +34,17 @@ async function initiatePhonePePayment(totalAmount) {
           Authorization: `O-Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          amount: totalAmount * 100,
+          amount: totalAmount * 100, // rupees → paise
           expireAfter: 1200,
+
           merchantOrderId: "ORDER_" + Date.now(),
+
           paymentFlow: {
             type: "PG_CHECKOUT",
-            message: "Orange Delivery Order Payment",
+            message: "Orange Delivery Payment",
+
             merchantUrls: {
-              redirectUrl: "https://yourwebsite.com/payment-success.html",
+              redirectUrl: "https://yourdomain.com/success.html",
             },
           },
         }),
@@ -43,14 +52,17 @@ async function initiatePhonePePayment(totalAmount) {
     );
 
     const paymentData = await paymentResponse.json();
+    console.log("Payment Data:", paymentData);
 
+    // STEP 3: Redirect User
     if (paymentData.redirectUrl) {
       window.location.href = paymentData.redirectUrl;
     } else {
       alert("Payment initiation failed!");
     }
+
   } catch (error) {
     console.error("Payment Error:", error);
-    alert("Something went wrong while initiating payment.");
+    alert("Something went wrong!");
   }
 }
